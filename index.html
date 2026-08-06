@@ -29,6 +29,7 @@
 <meta name="twitter:image:alt" content="RAVA, a publication format by Kian Esmaeili">
 
 <script type="application/ld+json">
+
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -74,31 +75,6 @@
     }
   ]
 }
-
-/* hero live demo, values from the manuscript */
-(function(){
-var dAcc=document.getElementById('dAcc'),dV=document.getElementById('dVerdict'),dSw=document.getElementById('dSwitch');
-if(!dAcc||!dSw)return;
-var reducedMo=matchMedia('(prefers-reduced-motion: reduce)').matches;
-var idsOn=true,anim=null;
-dSw.addEventListener('click',function(){
-  idsOn=!idsOn;dSw.setAttribute('aria-checked',String(idsOn));
-  if(anim)cancelAnimationFrame(anim);
-  var from=idsOn?61:100,to=idsOn?100:61;
-  if(reducedMo){dAcc.textContent=(to===61?'~61%':'100%');}
-  else{
-    var t0=performance.now(),dur=900;
-    (function tick(t){var p=Math.min(1,(t-t0)/dur);
-      var v=Math.round(from+(to-from)*(1-Math.pow(1-p,3)));
-      dAcc.textContent=(to===61&&p===1?'~61%':v+'%');
-      if(p<1)anim=requestAnimationFrame(tick);})(t0);
-  }
-  dAcc.classList.toggle('dropped',!idsOn);
-  dV.innerHTML=idsOn
-    ?'Identifiers restored, "perfect" again. That is the problem.'
-    :'It was memorising IDs, not learning behaviour. <b>500+ files misflagged.</b> The full article shows why.';
-});
-})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -344,6 +320,31 @@ footer .mono{font-family:var(--mono);font-size:12px}
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* hero live demo, values from the manuscript */
+(function(){
+var dAcc=document.getElementById('dAcc'),dV=document.getElementById('dVerdict'),dSw=document.getElementById('dSwitch');
+if(!dAcc||!dSw)return;
+var reducedMo=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var idsOn=true,anim=null;
+dSw.addEventListener('click',function(){
+  idsOn=!idsOn;dSw.setAttribute('aria-checked',String(idsOn));
+  if(anim)cancelAnimationFrame(anim);
+  var from=idsOn?61:100,to=idsOn?100:61;
+  if(reducedMo){dAcc.textContent=(to===61?'~61%':'100%');}
+  else{
+    var t0=performance.now(),dur=900;
+    (function tick(t){var p=Math.min(1,(t-t0)/dur);
+      var v=Math.round(from+(to-from)*(1-Math.pow(1-p,3)));
+      dAcc.textContent=(to===61&&p===1?'~61%':v+'%');
+      if(p<1)anim=requestAnimationFrame(tick);})(t0);
+  }
+  dAcc.classList.toggle('dropped',!idsOn);
+  dV.innerHTML=idsOn
+    ?'Identifiers restored, "perfect" again. That is the problem.'
+    :'It was memorising IDs, not learning behaviour. <b>500+ files misflagged.</b> The full article shows why.';
+});
+})();
 </script>
 </body>
 </html>
