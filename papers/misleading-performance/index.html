@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Misleading Performance in Sysmon-Based Machine Learning · Interactive Investigation</title>
-<meta name="description" content="A ransomware detector scored 100% and learned almost nothing. An interactive companion to the manuscript, currently under review: remove two identifier columns, aggregate 6,258 events into behavioural windows, and meet the honest number.">
+<title>Misleading Performance in Sysmon-Based ML · RAVA</title>
+<meta name="description" content="Why did a Sysmon ransomware detector score 100%? Remove identifier leakage, aggregate 6,258 events, and see balanced accuracy settle at 82%.">
 <meta name="author" content="Kian Esmaeili">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<link rel="canonical" href="https://research.kianesmaeili.com/papers/misleading-performance/">
+<link rel="canonical" href="https://rava.kianesmaeili.com/papers/misleading-performance/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="RAVA articles">
-<meta property="og:title" content="The Case of the Perfect Detector · Interactive Investigation">
-<meta property="og:description" content="A ransomware detector scored a perfect 100% and the paper behind it proves it learned almost nothing. Six questions between you and why.">
-<meta property="og:url" content="https://research.kianesmaeili.com/papers/misleading-performance/">
-<meta property="og:image" content="https://research.kianesmaeili.com/assets/og-misleading-performance.png">
+<meta property="og:site_name" content="RAVA">
+<meta property="og:title" content="Misleading Performance in Sysmon-Based ML · RAVA">
+<meta property="og:description" content="A Sysmon ransomware detector scored 100% by learning identifiers, not behaviour. Remove the leakage and watch the result collapse.">
+<meta property="og:url" content="https://rava.kianesmaeili.com/papers/misleading-performance/">
+<meta property="og:image" content="https://rava.kianesmaeili.com/assets/og-misleading-performance.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Misleading Performance in Sysmon-Based Machine Learning, an interactive investigation">
@@ -24,9 +24,9 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Case of the Perfect Detector · Interactive Investigation">
-<meta name="twitter:description" content="Remove two identifier columns and watch a perfect score collapse. An interactive companion to the manuscript, currently under review.">
-<meta name="twitter:image" content="https://research.kianesmaeili.com/assets/og-misleading-performance.png">
+<meta name="twitter:title" content="Misleading Performance in Sysmon-Based ML · RAVA">
+<meta name="twitter:description" content="Remove identifier leakage from a perfect Sysmon detector and watch the result collapse.">
+<meta name="twitter:image" content="https://rava.kianesmaeili.com/assets/og-misleading-performance.png">
 <meta name="twitter:image:alt" content="Misleading Performance in Sysmon-Based Machine Learning, an interactive investigation">
 
 <!-- Highwire Press citation tags -->
@@ -36,16 +36,17 @@
 <meta name="citation_author_institution" content="University of North Georgia">
 <meta name="citation_publication_date" content="2026">
 <meta name="citation_language" content="en">
-<meta name="citation_abstract_html_url" content="https://research.kianesmaeili.com/papers/misleading-performance/">
+<meta name="citation_abstract_html_url" content="https://rava.kianesmaeili.com/papers/misleading-performance/">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ScholarlyArticle",
-  "@id": "https://research.kianesmaeili.com/papers/misleading-performance/#article",
+  "@id": "https://rava.kianesmaeili.com/papers/misleading-performance/#article",
   "headline": "Misleading Performance in Sysmon-Based Machine Learning: The Impact of Data Representation and Temporal Structure",
   "name": "Misleading Performance in Sysmon-Based Machine Learning: The Impact of Data Representation and Temporal Structure",
-  "url": "https://research.kianesmaeili.com/papers/misleading-performance/",
+  "url": "https://rava.kianesmaeili.com/papers/misleading-performance/",
+  "image": "https://rava.kianesmaeili.com/assets/og-misleading-performance.png",
   "abstract": "Near-perfect accuracy in Sysmon-based ransomware detection is commonly a measurement artifact of event-level data representation rather than a stable result. Identifier features such as ProcessId and ThreadId carry most of the predictive weight; removing them collapses accuracy to roughly 55 to 61 percent. Behavioural aggregation into fixed time windows produces an honest representation but compresses high-frequency activity into few samples, a phenomenon named temporal collapse. Balanced behavioural evaluation yields 82 percent, the first trustworthy figure in the study. The pattern holds across five algorithms, indicating that data representation, not model selection, is the dominant factor.",
   "inLanguage": "en",
   "isAccessibleForFree": true,
@@ -79,7 +80,7 @@
     "Endpoint security"
   ],
   "publisher": { "@id": "https://www.kianesmaeili.com/#person" },
-  "mainEntityOfPage": "https://research.kianesmaeili.com/papers/misleading-performance/"
+  "mainEntityOfPage": "https://rava.kianesmaeili.com/papers/misleading-performance/"
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -415,8 +416,8 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
     </div>
     <div class="sub-metrics" id="subM"><span>Precision <b>100%</b></span><span>Recall <b>100%</b></span><span>F1 <b>100%</b></span><span>Errors <b>0</b></span></div>
     <div class="cold-q" id="coldQ">
-      <h1>Why did this happen?</h1>
-      <p>A ransomware detector trained on Windows Sysmon events just scored a perfect 100% on every metric, and the paper behind this experience proves it learned almost nothing. You have six questions between you and the answer.</p>
+      <h1>Misleading Performance in Sysmon-Based Machine Learning</h1>
+      <p><strong>Why did this happen?</strong> A ransomware detector trained on Windows Sysmon events just scored a perfect 100% on every metric, and the paper behind this experience proves it learned almost nothing. You have six questions between you and the answer.</p>
       <div class="cold-cta">
         <button class="btn lite" onclick="document.getElementById('q1').scrollIntoView({behavior:'smooth'})">Open the investigation ↓</button>
         <button class="btn ghostd" onclick="document.getElementById('verdict').scrollIntoView({behavior:'smooth'})">I just want the verdict</button>
