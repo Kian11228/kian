@@ -84,7 +84,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F4F6F9; --panel:#FFFFFF; --ink:#1B1F24; --ink-soft:#3C4657; --ink-faint:#6B7688;
@@ -371,11 +371,30 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
 .rail-dot.active{background:var(--burst);transform:scale(1.35)}
 .rail-dot .tip{position:absolute;left:22px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px 9px;white-space:nowrap;opacity:0;pointer-events:none;transition:.15s}
 .rail-dot:hover .tip{opacity:1}
+
+.skip-to-content{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ink);color:#fff;padding:12px 20px;font-family:var(--mono);font-size:13px;border-radius:0 0 6px 0}
+.skip-to-content:focus{left:0}
+.rava-home{position:fixed;top:16px;left:18px;z-index:60;display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .35s ease,transform .35s ease}
+.rava-home.on{opacity:1;pointer-events:auto;transform:none}
+.rava-home svg{width:17px;height:17px;flex:none}
+.rava-home span{font-family:'Cormorant Garamond',Georgia,serif;font-size:21px;letter-spacing:.13em;line-height:1}
+.rava-home:hover{color:var(--blue)}
+@media(max-width:760px){.rava-home{top:12px;left:12px}.rava-home span{font-size:18px}}
+@media print{.rava-home,.skip-to-content{display:none}}
 </style>
 </head>
 <body>
 
+<a class="skip-to-content" href="#cold">Skip to content</a>
+
+<a class="rava-home" id="ravaHome" href="/" aria-label="RAVA home">
+  <svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 5 L34 40 L28.5 40 L20 18.5 L11.5 40 L6 40 Z" fill="currentColor"/></svg>
+  <span>RAVA</span>
+</a>
+
 <nav id="rail" aria-label="Investigation progress"></nav>
+
+<main id="main">
 
 <!-- ================= COLD OPEN ================= -->
 <section id="cold">
@@ -416,12 +435,12 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
     <div class="panel hypo rv"><div class="hypo-body">
       <div class="stage-grid">
         <div>
-          <h4 class="sl">What the model relied on</h4>
+          <h3 class="sl">What the model relied on</h3>
           <div class="fi-bars" id="fi1"></div>
           <p class="acc-note" style="margin-top:16px"><strong>ThreadId and ProcessId carried nearly all the predictive weight.</strong> Those are identifiers, labels the operating system assigns, not behaviour. The model matched IDs to classes the way you'd memorize answers, not learn material.</p>
         </div>
         <div>
-          <h4 class="sl">The “perfect” confusion matrix</h4>
+          <h3 class="sl">The “perfect” confusion matrix</h3>
           <div class="cm" id="cm1"></div>
           <p class="cm-cap">Zero errors in both classes. In event-level Sysmon data, a flawless matrix is not a triumph, it's the first clue.</p>
         </div>
@@ -472,14 +491,14 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
           </div>
           <div class="stage-grid">
             <div>
-              <h4 class="sl">Accuracy without identifiers</h4>
+              <h3 class="sl">Accuracy without identifiers</h3>
               <div class="acc-read"><span class="acc-num honest" id="acc2">100%</span><span class="acc-badge real" id="badge2">Shortcut removed</span></div>
               <p class="acc-note" id="note2"></p>
-              <h4 class="sl" style="margin-top:18px">Where the importance went</h4>
+              <h3 class="sl" style="margin-top:18px">Where the importance went</h3>
               <div class="fi-bars" id="fi2"></div>
             </div>
             <div>
-              <h4 class="sl" id="cm2title">Confusion matrix · Random Forest</h4>
+              <h3 class="sl" id="cm2title">Confusion matrix · Random Forest</h3>
               <div class="cm" id="cm2"></div>
               <p class="cm-cap" id="cm2cap"></p>
             </div>
@@ -615,7 +634,7 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
           <div class="stage-grid stagecard">
             <div class="mini-stamp" id="stamp2">Misleading</div>
             <div>
-              <h4 class="sl">The result</h4>
+              <h3 class="sl">The result</h3>
               <div class="acc-read"><span class="acc-num inflated" id="acc5">100%</span><span class="acc-badge warn">Majority-class trap</span></div>
               <div class="metric-row" style="margin-top:18px">
                 <div class="met warn"><div class="mv">100%</div><div class="mk">Accuracy</div></div>
@@ -624,7 +643,7 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
               <p class="acc-note">The model predicted <strong>every single window as benign</strong>. With 127 of 130 windows in one class, that alone buys ~perfect accuracy. Evaluation even warned that only a single label appeared in the predictions.</p>
             </div>
             <div>
-              <h4 class="sl">Confusion matrix · all predictions benign</h4>
+              <h3 class="sl">Confusion matrix · all predictions benign</h3>
               <div class="cm" id="cm5"></div>
               <p class="cm-cap">The 100% from the cold open and this 100% are two different failures, leakage there, imbalance here, with the same root cause: representation.</p>
             </div>
@@ -657,7 +676,7 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
       <div class="stage" id="stage4">
         <div class="stage-grid">
           <div>
-            <h4 class="sl">Random Forest · balanced aggregated (10 s)</h4>
+            <h3 class="sl">Random Forest · balanced aggregated (10 s)</h3>
             <div class="metric-row">
               <div class="met good"><div class="mv" id="acc6">82%</div><div class="mk">Accuracy</div></div>
               <div class="met good"><div class="mv">1.00</div><div class="mk">Precision (mal.)</div></div>
@@ -666,7 +685,7 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
             <p class="acc-note"><strong>82%, and it's the best number in this entire investigation.</strong> Zero false positives. Nine malicious windows genuinely missed. Real precision–recall trade-offs are what learning actually looks like. Window size barely matters: ~80% at 5 s, ~75% at 30 s.</p>
           </div>
           <div>
-            <h4 class="sl">An honest confusion matrix, at last</h4>
+            <h3 class="sl">An honest confusion matrix, at last</h3>
             <div class="cm" id="cm6"></div>
             <p class="cm-cap">23 TN · 19 TP · 9 FN · 0 FP. Imperfect, informative, trustworthy.</p>
           </div>
@@ -697,7 +716,7 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
       <div class="score-txt" id="scoreTxt">Your hypotheses versus the data. Run the three experiments above to complete your case file.</div>
     </div>
     <div class="panel mx-wrap rv" style="padding:20px">
-      <h4 class="sl" style="margin-bottom:4px">Corroboration · five models, four representations, tap any cell</h4>
+      <h3 class="sl" style="margin-bottom:4px">Corroboration · five models, four representations, tap any cell</h3>
       <table class="mx" id="mxTable" aria-label="Model performance across data representations"></table>
       <div class="mx-detail" id="mxDetail"><b>Tip:</b> select a cell to see what was really behind that number.</div>
       <div class="mx-key">
@@ -748,10 +767,12 @@ footer .cite{font-family:var(--mono);font-size:12.5px;background:var(--panel);bo
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">
     <div class="cite">Esmaeili, K., &amp; Ghafarian, A. “Misleading Performance in Sysmon-Based Machine Learning: The Impact of Data Representation and Temporal Structure.” University of North Georgia. Open access under CC BY-NC-SA 4.0.</div>
-    <p>This RAVA article is a companion for exploration and learning. RAVA builds on prior work in augmented scholarly communication, including Living Papers (Heer et al., UIST 2023); where those systems are authoring toolkits, RAVA specifies a reading protocol in which the reader commits to a prediction before running each experiment. Every metric, figure and definition comes directly from the manuscript, including the manuscript figures shown in “Manuscript figure” mode. The paper remains the single source of truth and the authoritative research record.</p>
+    <p>This <a href="/" style="color:var(--blue)">RAVA</a> article is a companion for exploration and learning. The research programme behind it is at <a href="https://www.kianesmaeili.com/" style="color:var(--blue)">kianesmaeili.com</a>. RAVA builds on prior work in augmented scholarly communication, including Living Papers (Heer et al., UIST 2023); where those systems are authoring toolkits, RAVA specifies a reading protocol in which the reader commits to a prediction before running each experiment. Every metric, figure and definition comes directly from the manuscript, including the manuscript figures shown in “Manuscript figure” mode. The paper remains the single source of truth and the authoritative research record.</p>
   </div>
 </footer>
 
@@ -1112,6 +1133,10 @@ const secIO=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting)document.querySelectorAll('.rail-dot').forEach(d=>d.classList.toggle('active',d.dataset.t===e.target.id));
 }),{rootMargin:'-40% 0px -55% 0px'});
 RAIL.forEach(([id])=>secIO.observe($(id)));
+
+(function(){var hm=document.getElementById('ravaHome');if(!hm)return;
+var t=function(){hm.classList.toggle('on',window.scrollY>420)};
+window.addEventListener('scroll',t,{passive:true});t();})();
 </script>
 </body>
 </html>
