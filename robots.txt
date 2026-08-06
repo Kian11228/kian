@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://research.kianesmaeili.com/sitemap.xml
+Sitemap: https://rava.kianesmaeili.com/sitemap.xml
